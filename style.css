@@ -1,0 +1,33 @@
+.js-toggle-button {
+    /* 大きくする、角丸にするためのスタイル */
+    padding: 15px 30px; 
+    font-size: 18px;    
+    border-radius: 10px; 
+    
+    /* デザイン */
+    border: 2px solid #3498db; 
+    background-color: #3498db; 
+    color: white;              
+    cursor: pointer; 
+    margin: 5px; 
+    transition: background-color 0.3s ease;
+}
+
+.js-toggle-button:hover {
+    background-color: #2980b9; 
+    border-color: #2980b9;
+}
+
+.hidden {
+    display: none; /* 結果を隠す */
+}
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+body{
+    text-align: center; /* 中央揃え */
+}
