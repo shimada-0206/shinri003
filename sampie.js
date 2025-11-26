@@ -1,33 +1,81 @@
+/* sampie.js */
+
 $(document).ready(function() {
-    // 1. 初期設定: すべての結果ボックスを非表示にします
+
+    // 1. 【初期化の強制】すべての結果と解説エリアを、jQueryで強制的に非表示からスタート 
+    //    HTMLから hidden クラスを削除した解説エリアも、これで非表示から始まります。
     $('.result-box').hide(); 
 
-    // --- 汎用的な選択肢ボタン (js-toggle-button) の処理 (変更なし) ---
-    $('.js-toggle-button').on('click', function() {
-        var targetID = $(this).data('target'); 
+    // インライン結果 (選択肢結果) を削除する関数
+    function clearInlineResults($group) {
+        $group.find('.inline-result').remove();
+    }
 
-        // クリックされた要素以外（選択肢の結果も解説エリアも含む）をすべて非表示
-        $('.result-box').not(targetID).fadeOut(200);
+    // --- 選択肢ボタン (js-toggle-button) の処理 ---
+    $('.js-toggle-button').on('click', function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var targetSelector = $btn.data('target');
+        if (!targetSelector) return;
+
+        var $group = $btn.closest('.new-question-group');
         
-        // 自分の結果は、表示・非表示を切り替える
-        $(targetID).fadeToggle(400); 
+        // 1. 同じグループの他のインライン結果を削除し、開いている解説エリアを閉じる
+        clearInlineResults($group);
+        $group.find('.result-box[id^="hintArea"]').slideUp(220); 
+
+        var $orig = $(targetSelector);
+        if ($orig.length === 0) return;
+
+        // 2. 結果エリアの内容を複製して、ボタンの直下にインライン表示する
+        var $clone = $('<div class="inline-result"></div>').html($orig.html());
+        $btn.after($clone);
+
+        // 3. スムーズスクロール
+        $('html, body').animate({
+            scrollTop: $btn.offset().top - 20
+        }, 220);
     });
 
-    // --- 🔑 解説ボタンの新しい汎用処理（この部分が個別IDから汎用処理に変わります） ---
-    // 解説ボタンには HTML 側で新しく .js-hint-toggle クラスが必要です
-    $('.js-hint-toggle').on('click', function() {
-        var currentQ = $(this).data('question');     // 例: 'q1', 'q2', 'q3'
-        var targetArea = $(this).data('target-area'); // 例: '#hintAreaA', '#hintAreaE'
+    // --- 🔑 解説ボタンの最終修正 (js-hint-toggle) ---
+    $('.js-hint-toggle').on('click', function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var targetSelector = $btn.data('target-area');
+        if (!targetSelector) return;
 
-        // 1. クリックされたボタンと同じ質問属性を持つ解説エリアのみをトグル表示
-        $(targetArea).slideToggle(300);
+        var $target = $(targetSelector);
+        if ($target.length === 0) return;
+
+        var $group = $btn.closest('.new-question-group');
         
-        // 2. 他の質問のすべての結果/解説エリアを非表示にする
-        //    (currentQと異なる data-question を持つ要素をすべて非表示)
-        $('.result-box').not('[data-question="' + currentQ + '"]').fadeOut(200);
+        // 1. 現在のグループ内の選択肢結果（.inline-result）を閉じる
+        clearInlineResults($group);
 
-        // 3. 同じ質問の選択肢の結果エリアを非表示にする
-        //    (同じ質問内の解説エリア以外を非表示)
-        $('.result-box[data-question="' + currentQ + '"]').not(targetArea).fadeOut(200);
+        // 2. 目的の解説エリアの表示/非表示を切り替える (slideToggle)
+        //    これにより、非表示状態（.hide()）から確実に開きます。
+        $target.slideToggle(220, function() {
+            // 開いたときにスクロール
+            if ($target.is(':visible')) {
+                $('html, body').animate({
+                    scrollTop: $btn.offset().top - 20
+                }, 220);
+            }
+        });
+    });
+
+    // ページ上の他の場所をクリックしたとき、開いている結果を閉じる
+    $(document).on('click', function(e) {
+        var $t = $(e.target);
+        // 結果やボタン、解説エリア内をクリックした場合は閉じない
+        if ($t.closest('.js-toggle-button').length ||
+            $t.closest('.js-hint-toggle').length ||
+            $t.closest('.inline-result').length ||
+            $t.closest('.result-box').length
+        ) return;
+
+        // 選択肢の結果（インライン）と解説エリア（result-box）を閉じる
+        $('.inline-result').remove();
+        $('.result-box').slideUp(220);
     });
 });

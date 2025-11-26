@@ -1,81 +1,102 @@
-/* ------------------------------------ */
-/* 1. 全体の配置と基本設定 */
-/* ------------------------------------ */
+/* style.css */
+
+/* 全体のレイアウト設定 */
 body {
-    text-align: center; /* 中央揃えを維持 */
-    font-size: 16px;    /* 本文の基本サイズを確保 */
-    /* iOSが勝手にフォントを拡大するのを防ぐ */
-    -webkit-text-size-adjust: 100%; 
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    padding: 0;
+    line-height: 1.6;
 }
 
-/* クイズ全体を囲む要素：中央寄せと最大幅の確保 */
+/* 質問グループのスタイル */
 .new-question-group {
-    max-width: 600px; /* PCなど広い画面で広がりすぎないようにする */
-    margin: 0 auto;   /* 画面中央に配置（左右自動マージン） */
-    padding-left: 15px; /* 画面端に張り付くのを防ぐ左右余白 */
-    padding-right: 15px;
-}
-
-/* ------------------------------------ */
-/* 2. 質問タイトルと解説ボタンのレイアウト崩れ対策 */
-/* ------------------------------------ */
-/* HTMLの style="display: flex" の振る舞いを補助する */
-.new-question-group > div:first-child { 
-    flex-wrap: wrap; /* 画面が狭い時に要素が折り返すようにする */
-    gap: 10px;       /* 要素間の隙間を空ける */
-}
-
-/* ------------------------------------ */
-/* 3. 選択肢ボタン（js-toggle-button） */
-/* ------------------------------------ */
-.js-toggle-button {
-    /* 既存のスタイル... */
-    padding: 15px 30px; 
-    font-size: 18px;    
-    
-    /* 🚨 修正点：セミコロンを追加しました 🚨 */
-    border-radius: 50px; 
-    
-    border: 2px solid #3498db; 
-    background-color: #3498db; 
-    color: white;              
-    cursor: pointer; 
-    transition: background-color 0.3s ease;
-    box-sizing: border-box; 
-    
-    /* レスポンシブ設定（維持） */
-    display: block; 
-    width: 100%; 
-    max-width: 300px; 
-    margin: 10px auto; 
-}
-
-.js-toggle-button:hover {
-    background-color: #2980b9; 
-    border-color: #2980b9;
-}
-
-/* ------------------------------------ */
-/* 4. 結果ボックス（result-box） */
-/* ------------------------------------ */
-.hidden {
-    display: none;
-}
-.result-box {
-    margin-top: 20px;
-    padding: 15px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
     border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    /* 画面幅全体で正しく収まるようにする */
-    box-sizing: border-box; 
-    text-align: left; /* テキストは左揃えに戻すと読みやすい */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* 結果ボックス内の文字サイズ調整 */
-.result-box h3 {
-    font-size: 20px;
+/* 質問のタイトル */
+h2 {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 10px;
 }
-.result-box p {
-    font-size: 14px;
-    line-height: 1.6; /* 行間を広げて読みやすくする */
+
+/* ---------------------- ボタンのスタイル ---------------------- */
+
+/* 選択肢ボタン (js-toggle-button) の共通スタイル */
+.js-toggle-button {
+    display: block;
+    width: 100% !important; /* 幅を優先 */
+    padding: 10px 15px !important; /* パディングを優先 */
+    margin: 10px 0 !important; /* マージンを優先 */
+    border: 1px solid #007bff !important;
+    border-radius: 5px !important;
+    background-color: #f8f9fa !important;
+    color: #007bff !important;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1em !important;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* 選択肢ボタンのホバー/アクティブ時 */
+.js-toggle-button:hover {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
+/* 解説ボタン (js-hint-toggle) のスタイル */
+.js-hint-toggle {
+    /* HTMLのインラインスタイルでサイズを指定しているため、ここでは基本色を設定 */
+    background-color: #87ceeb; /* スカイブルー */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+.js-hint-toggle:hover {
+    background-color: #5fb5e2;
+}
+
+/* ---------------------- 結果・解説エリア ---------------------- */
+
+/* 結果/解説エリアの共通スタイル */
+.result-box {
+    margin: 15px 0;
+    padding: 15px;
+    border-left: 5px solid #007bff; /* デフォルトの左ボーダー */
+    border-radius: 0 8px 8px 0;
+    background-color: #e9f2ff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 選択肢のインライン結果のスタイル */
+.inline-result {
+    margin: 15px 0;
+    padding: 15px;
+    border-left: 5px solid #28a745; /* 緑色 */
+    border-radius: 0 8px 8px 0;
+    background-color: #e6ffe6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.result-box h3, .inline-result h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+/* hidden クラス (jQueryが非表示にするときは使われませんが、念のため) */
+.hidden {
+    display: none !important;
+}
+
+.jet01{
+    text-align: center;
 }
