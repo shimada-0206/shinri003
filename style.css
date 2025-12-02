@@ -1,0 +1,126 @@
+/* 全体設定 */
+body {
+    font-family: 'Hiragino Sans', 'メイリオ', Meiryo, sans-serif;
+    background-color: #eef2f5; /* 非常に薄い青灰色の背景 */
+    color: #333;
+    line-height: 1.6;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 680px;
+    width: 100%;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* 立体感のある影 */
+}
+
+h1 {
+    text-align: center;
+    color: #007bff; /* メインカラー（青） */
+    font-size: 28px;
+    font-weight: 600;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+}
+
+/* 質問ブロック */
+.question-block {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f7f9fc; /* 質問ブロックの背景色を少し変える */
+    border: 1px solid #e0e4e8;
+}
+
+.question-block h3 {
+    margin-top: 0;
+    color: #495057; /* 質問文の色 */
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-left: 5px solid #ff5722; /* アクセントカラー（オレンジ） */
+    padding-left: 10px;
+}
+
+/* 選択肢ボタン */
+.choices button {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    color: #333;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-size: 16px;
+}
+
+/* マウスオーバー時 */
+.choices button:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+/* 選択済みボタン */
+.choices button.selected {
+    background-color: #007bff; /* メインカラー */
+    color: white;
+    font-weight: bold;
+    border-color: #007bff;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+
+/* 結果表示エリア */
+#result {
+    text-align: center;
+    padding: 30px;
+    border: 2px solid #ff5722; /* アクセントカラーの枠 */
+    border-radius: 10px;
+    background-color: #fff8e1; /* 薄いクリーム色 */
+    margin-top: 40px;
+}
+
+#result h2 {
+    color: #dc3545;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#result-text {
+    font-size: 16px;
+    line-height: 1.8;
+    text-align: left;
+    white-space: pre-wrap; /* 改行を反映させる */
+    color: #495057;
+}
+
+/* リセットボタン */
+#reset-button {
+    padding: 10px 30px;
+    margin-top: 25px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 50px; /* 角丸を強くする */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+#reset-button:hover {
+    background-color: #5a6268;
+}
+
+.hidden {
+    display: none;
+}
